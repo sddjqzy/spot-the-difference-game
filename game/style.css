@@ -1,0 +1,95 @@
+/* Twin Worlds — Spot the Difference. Warm, readable, built for a 1280x800 desktop window. */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #1c2436; color: #f5f0e6; font-family: "Segoe UI", system-ui, sans-serif; }
+#app { width: 1280px; margin: 0 auto; padding: 10px 14px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+button { cursor: pointer; font-family: inherit; }
+
+#hud {
+  display: flex; align-items: center; gap: 14px;
+  background: #2a3350; border-radius: 12px; padding: 8px 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+}
+.brand { font-size: 22px; font-weight: 800; letter-spacing: 0.5px; white-space: nowrap; }
+.brand span { color: #ffd93b; }
+.brand em { font-size: 13px; font-weight: 400; color: #b8c2d9; font-style: normal; margin-left: 4px; }
+#level-name { font-size: 15px; font-weight: 600; color: #dfe6f5; white-space: nowrap; }
+#timer-wrap { display: flex; align-items: center; gap: 8px; min-width: 190px; }
+#timer { font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; }
+#timer.low { color: #ff6b6b; }
+#timer-track { flex: 1; height: 8px; background: #1c2436; border-radius: 4px; overflow: hidden; }
+#timer-bar { height: 100%; width: 100%; background: #22c55e; border-radius: 4px; transition: width 0.3s linear; }
+#timer-bar.low { background: #ef4444; }
+#counter { font-size: 15px; font-weight: 700; color: #ffd93b; white-space: nowrap; }
+#score { font-size: 15px; font-weight: 700; white-space: nowrap; }
+#hud button, .bottom-actions button {
+  background: #3b4a73; color: #f5f0e6; border: 1px solid #55648f;
+  border-radius: 8px; padding: 7px 12px; font-size: 14px; font-weight: 600;
+}
+#hud button:hover, .bottom-actions button:hover { background: #4a5a86; }
+#hud button:disabled { opacity: 0.45; cursor: default; }
+#btn-hint { background: #7b61ff; border-color: #9a86ff; }
+
+#boards { display: flex; gap: 16px; margin-top: 12px; justify-content: center; }
+.panel-col { text-align: center; }
+.panel-label {
+  font-size: 14px; font-weight: 700; letter-spacing: 1px; color: #b8c2d9;
+  margin-bottom: 6px; text-transform: uppercase;
+}
+canvas {
+  display: block; width: 600px; height: 440px;
+  border-radius: 12px; border: 3px solid #3b4a73;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4); cursor: crosshair; background: #fff;
+}
+
+#bottombar {
+  display: flex; align-items: center; gap: 16px; margin-top: 12px;
+  background: #2a3350; border-radius: 12px; padding: 10px 16px;
+}
+#message { flex: 1; font-size: 15px; color: #ffe9a8; min-height: 20px; }
+#level-dots { display: flex; gap: 6px; }
+.dot {
+  width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  background: #3b4a73; color: #b8c2d9; font-size: 13px; font-weight: 700;
+}
+.dot.current { background: #ffd93b; color: #1c2436; }
+.dot.done { background: #22c55e; color: #fff; }
+#level-tagline { font-size: 13px; color: #b8c2d9; font-style: italic; max-width: 340px; }
+.bottom-actions { display: flex; gap: 8px; }
+
+.overlay {
+  position: fixed; inset: 0; background: rgba(12, 16, 28, 0.78);
+  display: flex; align-items: center; justify-content: center; z-index: 10;
+}
+.overlay.hidden { display: none; }
+.card {
+  background: #2a3350; border: 1px solid #55648f; border-radius: 16px;
+  padding: 28px 34px; max-width: 640px; text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.card h1 { margin: 0 0 4px; font-size: 34px; color: #ffd93b; }
+.card h2 { margin: 0 0 8px; font-size: 26px; color: #ffd93b; }
+.card .subtitle { margin: 0 0 14px; font-size: 18px; color: #b8c2d9; letter-spacing: 2px; text-transform: uppercase; }
+.card p { font-size: 15px; line-height: 1.55; color: #dfe6f5; }
+.card .howto { font-size: 13px; color: #b8c2d9; background: #1c2436; border-radius: 8px; padding: 8px 12px; }
+.card button {
+  background: #3b4a73; color: #f5f0e6; border: 1px solid #55648f;
+  border-radius: 10px; padding: 10px 18px; font-size: 15px; font-weight: 700; margin: 6px 4px 0;
+}
+.card button.primary { background: #22c55e; border-color: #4ade80; color: #062b16; font-size: 16px; padding: 12px 26px; }
+.card button.primary:hover { background: #4ade80; }
+.stars { font-size: 34px; color: #ffd93b; letter-spacing: 6px; }
+.big-score { font-size: 22px; font-weight: 800; color: #ffd93b; }
+#level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; }
+.level-card {
+  background: #1c2436; border: 1px solid #55648f; border-radius: 10px;
+  padding: 10px 12px; text-align: left; color: #f5f0e6;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.level-card:hover { border-color: #ffd93b; }
+.level-card .level-num {
+  width: 24px; height: 24px; border-radius: 50%; background: #ffd93b; color: #1c2436;
+  display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px;
+}
+.level-card .level-name { font-weight: 700; font-size: 15px; }
+.level-card .level-meta { font-size: 12px; color: #b8c2d9; }
+#status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

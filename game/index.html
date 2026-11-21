@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twin Worlds — Spot the Difference</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23ffd93b'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%231c2436' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <div class="brand">🔍 <span>Twin Worlds</span> <em>Spot the Difference</em></div>
+    <div id="level-name">Level 1/6 · Sunny Garden</div>
+    <div id="timer-wrap"><span id="timer">⏱ 2:30</span><div id="timer-track"><div id="timer-bar"></div></div></div>
+    <div id="counter">🔍 Found 0 / 5 · 5 left</div>
+    <div id="score">Score 0</div>
+    <button id="btn-hint" type="button">💡 Hint (3)</button>
+    <button id="btn-sound" type="button">🔊 Sound</button>
+  </header>
+
+  <main id="boards">
+    <section class="panel-col">
+      <div class="panel-label">◀ LEFT · the original</div>
+      <canvas id="panel-left" width="600" height="440" aria-label="Left picture: the original scene"></canvas>
+    </section>
+    <section class="panel-col">
+      <div class="panel-label">RIGHT · spot what changed ▶</div>
+      <canvas id="panel-right" width="600" height="440" aria-label="Right picture: the same scene with differences"></canvas>
+    </section>
+  </main>
+
+  <footer id="bottombar">
+    <div id="message">Click a difference on either picture to mark it!</div>
+    <div id="level-dots"></div>
+    <div id="level-tagline">A quiet morning in the garden — but something is off.</div>
+    <div class="bottom-actions">
+      <button id="btn-menu" type="button">☰ Menu</button>
+      <button id="btn-restart" type="button">↻ Restart level</button>
+    </div>
+  </footer>
+
+  <div id="overlay-menu" class="overlay">
+    <div class="card">
+      <h1>🔍 Twin Worlds</h1>
+      <p class="subtitle">Spot the Difference</p>
+      <p>Two pictures. One world, twice — with a few sneaky changes hiding in the right one.
+        Click every difference on <b>either</b> picture to ring it. Six worlds, 39 differences,
+        a clock that never waits, and hints when you are stuck.</p>
+      <p class="howto">🖱 Click a difference &nbsp;·&nbsp; <b>H</b> hint (−50) &nbsp;·&nbsp; <b>M</b> mute &nbsp;·&nbsp; wrong click −15 &nbsp;·&nbsp; combos pay extra</p>
+      <div id="level-grid"></div>
+      <button id="btn-start" class="primary" type="button">▶ Start the hunt</button>
+    </div>
+  </div>
+
+  <div id="overlay-levelClear" class="overlay hidden">
+    <div class="card">
+      <div id="clear-stars" class="stars">★★★</div>
+      <h2 id="clear-title">Level cleared!</h2>
+      <p id="clear-detail"></p>
+      <button id="btn-next" class="primary" type="button">Next level →</button>
+      <button id="btn-menu2" type="button">☰ Menu</button>
+    </div>
+  </div>
+
+  <div id="overlay-victory" class="overlay hidden">
+    <div class="card">
+      <div class="stars">★★★</div>
+      <h1>🏆 You found them all!</h1>
+      <p class="big-score">Final score: <span id="victory-score">0</span></p>
+      <p id="victory-detail"></p>
+      <button id="btn-again" class="primary" type="button">↻ Play again</button>
+      <button id="btn-menu3" type="button">☰ Menu</button>
+    </div>
+  </div>
+
+  <div id="overlay-timeUp" class="overlay hidden">
+    <div class="card">
+      <h1>⏰ Time's up!</h1>
+      <p id="timeup-detail"></p>
+      <button id="btn-retry" class="primary" type="button">↻ Try this level again</button>
+      <button id="btn-menu4" type="button">☰ Menu</button>
+    </div>
+  </div>
+</div>
+<p id="status" role="status" aria-live="polite"></p>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
